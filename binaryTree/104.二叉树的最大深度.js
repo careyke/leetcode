@@ -16,6 +16,7 @@
 /**
  * @param {TreeNode} root
  * @return {number}
+ * // DFS 深度优先遍历
  */
 var maxDepth = function(root) {
   if(root === null) return 0;
