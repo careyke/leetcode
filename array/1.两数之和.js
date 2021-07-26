@@ -11,19 +11,18 @@
  * @return {number[]}
  * 构建map解法
  */
-var twoSum = function(nums, target) {
+var twoSum = function (nums, target) {
   const map = new Map();
   const len = nums.length;
-  for(let i=0;i<len;i++){
+  for (let i = 0; i < len; i++) {
     const num = nums[i];
     const n = target - num;
-    if(map.has(n)){
-      return [map.get(n),i];
-    }else{
+    if (map.has(n)) {
+      return [map.get(n), i];
+    } else {
       map.set(num, i);
     }
   }
   return [];
 };
 // @lc code=end
-

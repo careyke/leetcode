@@ -9,27 +9,27 @@
  * @param {string} s
  * @param {number} numRows
  * @return {string}
- * 周期变化 
+ * 周期变化
  * 找到规律可以降低复杂度
+ * 把数组每个子项按照规律拼成字符串
  */
-var convert = function(s, numRows) {
+var convert = function (s, numRows) {
   const len = s.length;
-  if(numRows === 1) return s;
-  const arr = new Array(numRows).fill('');
-  
+  if (numRows === 1) return s;
+  const arr = new Array(numRows).fill("");
+
   const period = numRows * 2 - 2;
-  for(let i = 0; i<len; i++){
+  for (let i = 0; i < len; i++) {
     const n = i % period;
     const m = n % numRows;
-    if(n < numRows){
+    if (n < numRows) {
       arr[m] = arr[m] + s[i];
-    }else{
-      const index = numRows-2-m;
+    } else {
+      const index = numRows - 2 - m;
       arr[index] = arr[index] + s[i];
     }
   }
 
-  return arr.join('');
+  return arr.join("");
 };
 // @lc code=end
-

@@ -11,18 +11,18 @@
  * @return {number}
  * 双指针解法，前后指针
  */
-var removeElement = function(nums, val) {
+var removeElement = function (nums, val) {
   const len = nums.length;
   let res = 0;
   let left = 0;
-  let right = len-1;
-  while(left <= right){
-    if(nums[right] === val){
+  let right = len - 1;
+  while (left <= right) {
+    if (nums[right] === val) {
       right--;
-    }else if(nums[left] !== val){
+    } else if (nums[left] !== val) {
       left++;
       res++;
-    }else {
+    } else {
       const temp = nums[right];
       nums[right] = nums[left];
       nums[left] = temp;
@@ -34,4 +34,3 @@ var removeElement = function(nums, val) {
   return res;
 };
 // @lc code=end
-
