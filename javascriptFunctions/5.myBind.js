@@ -5,8 +5,18 @@ Function.prototype.myBind = function (context, ...args) {
   const fn = this;
   function bound(...params) {
     const currentArgs = args.concat(params);
-    const thisArg = this instanceof fn ? this : context;
-    return fn.apply(thisArg, currentArgs);
+    // !!!!注意：这里判断条件可以用 [this instanceof bound] 来代替
+    if (new.target) {
+      // const result = fn.apply(this, currentArgs);
+      // if (result && typeof result === "object") {
+      //   return result;
+      // } else {
+      //   return this;
+      // }
+      return fn.apply(this instanceof bound ? this : context, currentArgs);
+    } else {
+      return fn.apply(context, currentArgs);
+    }
   }
 
   Object.setPrototypeOf(bound, Object.getPrototypeOf(fn));
@@ -18,6 +28,7 @@ Function.prototype.myBind = function (context, ...args) {
 // test
 function Foo() {
   this.a = 1;
+  return "hehe";
 }
 Foo.prototype = {
   b: 2,

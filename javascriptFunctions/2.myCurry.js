@@ -10,6 +10,19 @@ function myCurry(fn, ...args) {
   };
 }
 
+// 两种方法实现的细节不一致
+function myCurry(fn, ...args) {
+  const len = fn.length;
+  return function curry(...newArgs) {
+    const currentArgs = args.concat(newArgs);
+    if (currentArgs.length < len) {
+      return curry.bind(this, ...newArgs);
+    }
+
+    return fn.apply(this, currentArgs);
+  };
+}
+
 // test
 function add(a, b, c, d) {
   console.log(a + b + c + d);
