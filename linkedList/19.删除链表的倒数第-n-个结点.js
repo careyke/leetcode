@@ -2,6 +2,8 @@
  * @lc app=leetcode.cn id=19 lang=javascript
  *
  * [19] 删除链表的倒数第 N 个结点
+ * 快慢指针：
+ * 块指针先走几步，然后和慢指针一起走
  */
 
 // @lc code=start
@@ -16,27 +18,25 @@
  * @param {ListNode} head
  * @param {number} n
  * @return {ListNode}
- * 双指针
- * 保持距离n
- * 边界情况： 需要在前面加一个虚拟节点
- * 保持距离为n, 左右指针最少包含n+1个元素 所以需要在前面加一个虚拟节点
  */
-var removeNthFromEnd = function(head, n) {
-  const preHead = {next:head}
-  let left = preHead;
-  let right = preHead;
-  while(right.next){
-    right = right.next;
-    if(n === 0){
-      left = left.next;
-    }else{
-      n--;
-    }
-  }
-  if(n > 0) return null;
-  left.next = left.next.next;
+var removeNthFromEnd = function (head, n) {
+  const root = new ListNode(0, head);
+  let left = root;
+  let right = root;
 
-  return preHead.next;
+  // 1. right指针先走n+1步
+  while (n >= 0) {
+    right = right.next;
+    n--;
+  }
+
+  // 2. 同时移动快慢指针
+  while (right) {
+    left = left.next;
+    right = right.next;
+  }
+
+  left.next = left.next.next;
+  return root.next;
 };
 // @lc code=end
-
