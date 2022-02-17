@@ -34,19 +34,72 @@ var strStr = function (haystack, needle) {
       if (c1 !== c2) {
         break;
       }
-      if(i === len-1){
+      if (i === len - 1) {
         return index;
       }
     }
     const next = index + len;
-    if(next >= len1) return -1;
+    if (next >= len1) return -1;
     const lastIndex = map.get(haystack[next]);
-    if(lastIndex != null){
+    if (lastIndex != null) {
       index = index + len - lastIndex;
-    }else{
+    } else {
       index = next + 1;
     }
   }
   return -1;
 };
 // @lc code=end
+
+/*
+ * KMP
+ * @lc app=leetcode.cn id=28 lang=javascript
+ *
+ * [28] 实现 strStr()
+ * KMP算法
+ * 重点在于next数组的求取
+ * 理解可以参考：https://www.zhihu.com/question/21923021
+ * next[i]表示的意思是：模式串中以索引 i 位置的字符结尾的子串(必须是子串)中，最长的公共前后缀子串的长度
+ */
+
+// @lc code=start
+/**
+ * @param {string} haystack
+ * @param {string} needle
+ * @return {number}
+ */
+var strStr = function (haystack, needle) {
+  if (needle.length === 0) return 0;
+  const next = getNext(needle);
+
+  const len = haystack.length;
+  let j = 0;
+  for (let i = 0; i < len; i++) {
+    while (j > 0 && haystack[i] !== needle[j]) {
+      j = next[j - 1];
+    }
+    if (haystack[i] === needle[j]) {
+      j++;
+    }
+    if (j === needle.length) {
+      return i - needle.length + 1;
+    }
+  }
+  return -1;
+};
+
+function getNext(needle) {
+  const len = needle.length;
+  const next = [0];
+  let j = 0;
+  for (let i = 1; i < len; i++) {
+    while (j > 0 && needle[j] !== needle[i]) {
+      j = next[j - 1]; // 本质上也是KMP
+    }
+    if (needle[j] === needle[i]) {
+      j++;
+    }
+    next[i] = j;
+  }
+  return next;
+}
