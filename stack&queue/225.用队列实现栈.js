@@ -7,51 +7,49 @@
 // @lc code=start
 /**
  * Initialize your data structure here.
- * 可以使用一个队列
  */
-var MyStack = function() {
-  // 插入时交换位置
-  this.queue1 = []; // 主队列
-  this.queue2 = []; // 辅助队列
+var MyStack = function () {
+  this.mainQueue = []; // 主队列
+  this.copyQueue = []; // 副队列 - 辅助操作
 };
 
 /**
- * Push element x onto stack. 
+ * Push element x onto stack.
  * @param {number} x
  * @return {void}
- * 构造一个反向的队列
  */
-MyStack.prototype.push = function(x) {
-  this.queue2.push(x);
-  this.queue1.forEach((value)=>{
-    this.queue2.push(value);
-  });
-  this.queue1 = this.queue2;
-  this.queue2 = [];
+MyStack.prototype.push = function (x) {
+  this.copyQueue.push(x);
+  while (this.mainQueue.length) {
+    this.copyQueue.push(this.mainQueue.shift());
+  }
+  const temp = this.mainQueue;
+  this.mainQueue = this.copyQueue;
+  this.copyQueue = temp;
 };
 
 /**
  * Removes the element on top of the stack and returns that element.
  * @return {number}
  */
-MyStack.prototype.pop = function() {
-  return this.queue1.shift();
+MyStack.prototype.pop = function () {
+  return this.mainQueue.shift();
 };
 
 /**
  * Get the top element.
  * @return {number}
  */
-MyStack.prototype.top = function() {
-  return this.queue1[0];
+MyStack.prototype.top = function () {
+  return this.mainQueue[0];
 };
 
 /**
  * Returns whether the stack is empty.
  * @return {boolean}
  */
-MyStack.prototype.empty = function() {
-  return this.queue1.length === 0;
+MyStack.prototype.empty = function () {
+  return !this.mainQueue.length;
 };
 
 /**
@@ -62,5 +60,5 @@ MyStack.prototype.empty = function() {
  * var param_3 = obj.top()
  * var param_4 = obj.empty()
  */
-// @lc code=end
 
+// @lc code=end
