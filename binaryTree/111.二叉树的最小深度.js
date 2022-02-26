@@ -16,6 +16,7 @@
 /**
  * @param {TreeNode} root
  * @return {number}
+ * 迭代
  */
 var minDepth = function (root) {
   if (!root) return 0;
@@ -34,5 +35,26 @@ var minDepth = function (root) {
       if (node.right) queue.push(node.right);
     }
   }
+};
+
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ * 递归
+ */
+var minDepth = function (root) {
+  if (!root) return 0;
+  const leftLen = minDepth(root.left);
+  const rightLen = minDepth(root.right);
+
+  // 叶子节点表示的是 左右子节点都没有的节点
+  if (!root.left && root.right) {
+    return 1 + rightLen;
+  }
+  if (root.left && !root.right) {
+    return 1 + leftLen;
+  }
+
+  return Math.min(leftLen, rightLen) + 1;
 };
 // @lc code=end

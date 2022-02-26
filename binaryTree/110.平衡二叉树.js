@@ -17,23 +17,30 @@
  * @param {TreeNode} root
  * @return {boolean}
  * 递归
+ * 时间复杂度：O(n)
  */
-var isBalanced = function(root) {
-  if(!root) return true;
-  if(!isBalanced(root.left) || !isBalanced(root.right)){
-    return false;
-  }
-  const leftDeep = maxDepth(root.left);
-  const rightDeep = maxDepth(root.right);
-  if(Math.abs(leftDeep - rightDeep) > 1){
+var isBalanced = function (root) {
+  if (!root) return true;
+  const leftDepth = getDepth(root.left);
+  const rightDepth = getDepth(root.right);
+  if (leftDepth === -1 || rightDepth === -1) return false;
+  if (Math.abs(leftDepth - rightDepth) > 1) {
     return false;
   }
   return true;
 };
 
-var maxDepth = function(root){
-  if(!root) return 0;
-  return Math.max(maxDepth(root.left),maxDepth(root.right)) + 1;
+function getDepth(node) {
+  if (!node) return 0;
+  const leftDepth = getDepth(node.left);
+  if (leftDepth === -1) return -1;
+
+  const rightDepth = getDepth(node.right);
+  if (rightDepth === -1) return -1;
+
+  if (Math.abs(leftDepth - rightDepth) > 1) {
+    return -1;
+  }
+  return Math.max(leftDepth, rightDepth) + 1;
 }
 // @lc code=end
-

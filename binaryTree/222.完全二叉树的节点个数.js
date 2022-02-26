@@ -18,27 +18,38 @@
  * @return {number}
  * 利用完全二叉树和满二叉树来求解
  * 完全二叉树可以分解成一个完全二叉子树和满二叉子树
+ * 事件复杂度：O(logN * logN)
  */
-var countNodes = function(root) {
-  if(!root) return 0;
+var countNodes = function (root) {
+  if (!root) return 0;
   const leftDepth = depth(root.left);
   const rightDepth = depth(root.right);
-  if(leftDepth === rightDepth){
+  if (leftDepth === rightDepth) {
     // 左边子树是满二叉树
     return countNodes(root.right) + (1 << leftDepth);
-  }else{
+  } else {
     // 右边子树是满二叉树
     return countNodes(root.left) + (1 << rightDepth);
   }
 };
 
-var depth=function(root){
+var depth = function (root) {
   let depth = 0;
-  while(root){
+  while (root) {
     depth++;
     root = root.left;
   }
   return depth;
-}
-// @lc code=end
+};
 
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ * 递归法 - 不利用 完全二叉树 的特点
+ * 时间复杂度：O(n)
+ */
+var countNodes = function (root) {
+  if (!root) return 0;
+  return countNodes(root.left) + countNodes(root.right) + 1;
+};
+// @lc code=end
