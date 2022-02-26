@@ -57,6 +57,6 @@ var o = {
 var newO = deepClone(o);
 console.log(newO.a === newO.b);
 
-var a={}
+var a = {};
 a.b = a;
 console.log(deepClone(a));

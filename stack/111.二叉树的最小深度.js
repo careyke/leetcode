@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode.cn id=102 lang=javascript
+ * @lc app=leetcode.cn id=111 lang=javascript
  *
- * [102] 二叉树的层序遍历
+ * [111] 二叉树的最小深度
  */
 
 // @lc code=start
@@ -15,24 +15,24 @@
  */
 /**
  * @param {TreeNode} root
- * @return {number[][]}
+ * @return {number}
  */
-var levelOrder = function (root) {
-  if (!root) return [];
-  const res = [];
+var minDepth = function (root) {
+  if (!root) return 0;
   const queue = [root];
+  let res = 0;
   while (queue.length) {
     const len = queue.length;
-    const levelArr = [];
+    res++;
     for (let i = 0; i < len; i++) {
       const node = queue.shift();
-      levelArr.push(node.val);
+      if (!node.left && !node.right) {
+        return res;
+      }
+
       if (node.left) queue.push(node.left);
       if (node.right) queue.push(node.right);
     }
-    res.push(levelArr);
   }
-
-  return res;
 };
 // @lc code=end
