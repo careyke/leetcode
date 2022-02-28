@@ -12,14 +12,18 @@
  * f(n) = f(n-1) + f(n-2)
  * 使用空间，递归边循环
  */
-var climbStairs = function(n) {
-  const dp = [];
-  dp[1] = 1;
-  dp[2] = 2;
-  for(let i=3;i<=n;i++){
-    dp[i] = dp[i-1] + dp[i-2];
+var climbStairs = function (n) {
+  if (n === 1) return 1;
+  if (n === 2) return 2;
+
+  let dp_1 = 1;
+  let dp_2 = 2;
+
+  for (let i = 3; i <= n; i++) {
+    const num = dp_1 + dp_2;
+    dp_1 = dp_2;
+    dp_2 = num;
   }
-  return dp[n];
+  return dp_2;
 };
 // @lc code=end
-
